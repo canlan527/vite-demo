@@ -8,6 +8,8 @@
         autofocus=""
         autocomplete="off"
         placeholder="What needs to be done?"
+        v-model="newTodoItem"
+        @keyup.enter="addTodoItem"
       />
     </header>
     <section class="main">
@@ -59,10 +61,17 @@
 
 </template>
 <script>
+  import useTodoList from './composition/useTodoList'
+  import useAddTodoItem from './composition/useAddTodoItem'
+
   export default {
     name: 'App',
     setup() {
+      const { todos } = useTodoList()
       
+      return { 
+        ...useAddTodoItem(todos),// 展开该函数返回的每一项
+      }
     }
   }
 </script>
