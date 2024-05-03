@@ -7,14 +7,15 @@
           v-model="newTodoItem" @keyup.enter="addTodoItem" />
       </header>
       <section class="main">
-        <input id="toggle-all" class="toggle-all" type="checkbox" :checked="allCompleted" @input="changeAllChecked($event.target.checked)" />
+        <input id="toggle-all" class="toggle-all" type="checkbox" :checked="allCompleted"
+          @input="changeAllChecked($event.target.checked)" />
         <label for="toggle-all">Mark all as complete</label>
         <ul class="todo-list">
-          <li class="todo" :class="{ completed: item.completed, editing: item === editItem }"
-            @dblclick="editTodoItem(item)" v-for="item in list" :key="item.id">
+          <li class="todo" :class="{ completed: item.completed, editing: item === editItem }" v-for="item in list"
+            :key="item.id">
             <div class="view">
               <input class="toggle" type="checkbox" v-model="item.completed" />
-              <label>{{ item.title }}</label>
+              <label @dblclick="editTodoItem(item)">{{ item.title }}</label>
               <button class="destroy"></button>
             </div>
             <input class="edit" type="text" v-model="item.title" @keyup.enter="doneEdit(item.title)"
