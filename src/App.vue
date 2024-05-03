@@ -16,26 +16,10 @@
       <input id="toggle-all" class="toggle-all" type="checkbox" />
       <label for="toggle-all">Mark all as complete</label>
       <ul class="todo-list">
-        <li class="todo">
+        <li class="todo" :class="{completed: item.completed}" v-for="item in list" :key="item.id">
           <div class="view">
-            <input class="toggle" type="checkbox" />
-            <label>学习composition api</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" type="text" />
-        </li>
-        <li class="todo">
-          <div class="view">
-            <input class="toggle" type="checkbox" />
-            <label>投递50封简历</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" type="text" />
-        </li>
-        <li class="todo">
-          <div class="view">
-            <input class="toggle" type="checkbox" />
-            <label>上午10:30 参加面试</label>
+            <input class="toggle" type="checkbox" v-model="item.completed" />
+            <label>{{ item.title }}</label>
             <button class="destroy"></button>
           </div>
           <input class="edit" type="text" />
@@ -44,15 +28,15 @@
     </section>
     <footer class="footer">
       <span class="todo-count">
-        <strong>3</strong>
-        <span>items left</span>
+        <strong>{{ activelist.length }}</strong>
+        <span>item{{activelist.length > 1 ? 's' : ''}} left</span>
       </span>
       <ul class="filters">
-        <li><a href="#/all" class="selected">All</a></li>
-        <li><a href="#/active" class="">Active</a></li>
-        <li><a href="#/completed" class="">Completed</a></li>
+        <li><a href="#/all" :class="{selected: status === 'all' }">All</a></li>
+        <li><a href="#/active" :class="{selected: status === 'active' }">Active</a></li>
+        <li><a href="#/completed" :class="{selected: status === 'completed' }">Completed</a></li>
       </ul>
-      <button class="clear-completed" style="display: none">
+      <button class="clear-completed" v-show="completedlist.length > 0">
         Clear completed
       </button>
     </footer>
@@ -63,14 +47,17 @@
 <script>
   import useTodoList from './composition/useTodoList'
   import useAddTodoItem from './composition/useAddTodoItem'
+  import useFilter from './composition/useFilter'
 
   export default {
     name: 'App',
     setup() {
       const { todos } = useTodoList()
       
+      
       return { 
         ...useAddTodoItem(todos),// 展开该函数返回的每一项
+        ...useFilter(todos)
       }
     }
   }

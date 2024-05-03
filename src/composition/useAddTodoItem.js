@@ -18,7 +18,7 @@ export default function useAddTodoItem(todos) {
     }
     // 放到任务列表里
     console.log(todos.value)
-    todos.value.push(newTodo);
+    todos.value.unshift(newTodo);
     
     // 清空输入框
     newTodoItem.value = "";
