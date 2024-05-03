@@ -1,4 +1,5 @@
 import { ref,  } from "vue";
+import { generateId } from "../util/helper";
 
 export default function useAddTodoItem(todos) {
   const newTodoItem = ref("");
@@ -11,7 +12,7 @@ export default function useAddTodoItem(todos) {
     }
     // 构造新增项对象
     const newTodo = {
-      id: Date.now() + Math.random().toString(16).slice(2, 6),
+      id: generateId(),
       title: newTodoItem.value,
       completed: false,
     }
