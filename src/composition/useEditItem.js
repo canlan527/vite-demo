@@ -2,7 +2,6 @@ import { computed, ref } from "vue";
 
 export default function useEditItem(todos) {
   const editItem = ref(null)
-  const isAllCompleted = ref(true)
   
   // 获得要编辑的item
   const editTodoItem = (item) => {

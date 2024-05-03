@@ -16,7 +16,7 @@
             <div class="view">
               <input class="toggle" type="checkbox" v-model="item.completed" />
               <label @dblclick="editTodoItem(item)">{{ item.title }}</label>
-              <button class="destroy"></button>
+              <button class="destroy" @click="removeTodoItem(item)"></button>
             </div>
             <input class="edit" type="text" v-model="item.title" @keyup.enter="doneEdit(item.title)"
               @blur="doneEdit(item.title)" />
@@ -33,7 +33,7 @@
           <li><a href="#/active" :class="{ selected: status === 'active' }">Active</a></li>
           <li><a href="#/completed" :class="{ selected: status === 'completed' }">Completed</a></li>
         </ul>
-        <button class="clear-completed" v-show="completedlist.length > 0">
+        <button class="clear-completed" v-show="completedlist.length > 0" @click="clearCompleted">
           Clear completed
         </button>
       </footer>
@@ -46,6 +46,7 @@ import useTodoList from './composition/useTodoList'
 import useAddTodoItem from './composition/useAddTodoItem'
 import useFilter from './composition/useFilter'
 import useEditItem from './composition/useEditItem'
+import useRemove from './composition/useRemove'
 
 export default {
   name: 'App',
@@ -57,6 +58,7 @@ export default {
       ...useAddTodoItem(todos),// 展开该函数返回的每一项
       ...useFilter(todos),
       ...useEditItem(todos),
+      ...useRemove(todos)
     }
   }
 }
